@@ -62,7 +62,12 @@ sudo chmod 755 ~/bin/ssh-ident
 sudo chown root.root ~/bin/ssh-ident
 sudo mv ~/bin/ssh-ident /usr/bin/ssh
 
+sudo apt-get install -y python3.6
+pip3 install virtualenv
+virtualenv --python=`which python3.6` ~/venv
+
 cat >> ~/.bashrc << EOF
 export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 alias db='cd $HOME/"Dropbox (CS50)"'
+alias venv='source ~/venv/bin/activate'
 EOF
