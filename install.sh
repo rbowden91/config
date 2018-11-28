@@ -6,7 +6,7 @@ echo 'export PATH="$HOME/bin:$PATH"' >> ~/.profile
 source ~/.profile
 
 sudo apt-get update
-sudo apt-get install -y curl wget
+sudo apt-get install -y curl wget screen tmux
 
 cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 ~/.dropbox-dist/dropboxd
@@ -71,3 +71,25 @@ export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 alias db='cd $HOME/"Dropbox (CS50)"'
 alias venv='source ~/venv/bin/activate'
 EOF
+
+
+# https://github.com/Corwind/termite-install/blob/master/termite-install.sh
+curl https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
+
+# i3-gaps
+sudo apt-get install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev \
+libxcb-util0-dev libxcb-icccm4-dev libyajl-dev \
+libstartup-notification0-dev libxcb-randr0-dev \
+libev-dev libxcb-cursor-dev libxcb-xinerama0-dev \
+libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
+autoconf libxcb-xrm0 libxcb-xrm-dev automake
+git clone https://www.github.com/Airblader/i3 /tmp/i3-gaps
+cd /tmp/i3-gaps
+autoreconf --force --install
+rm -rf build/
+mkdir -p build && cd build/
+../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+make
+sudo make install
+cd ~
+rm -rf /tmp/i3-gaps
