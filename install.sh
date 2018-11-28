@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # tested on Ubuntu 18.04
 
 mkdir -p ~/bin
@@ -14,6 +14,7 @@ read -p "Press any key once you've logged into Dropbox... " -n1 -s
 wget -O ~/bin/dropbox 'https://www.dropbox.com/download?dl=packages/dropbox.py'
 chmod 700 ~/bin/dropbox
 dropbox autostart y
+dropbox start &> /dev/null &
 
 # spotify
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
@@ -34,9 +35,10 @@ sudo apt-get install -y chromium-browser
 xdg-settings set default-web-browser chromium-browser.desktop
 
 # TODO: hopefully files are here by now??
-cd ~/Dropbox*
+cd ~/"Dropbox (CS50)"
 dropbox exclude add *
 dropbox exclude remove Courses grad_school Identity
+sleep 3
 cd Courses
 dropbox exclude add *
 dropbox exclude remove cs50
@@ -75,6 +77,7 @@ EOF
 
 # https://github.com/Corwind/termite-install/blob/master/termite-install.sh
 curl https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
+rm -rf ltmain.sh termite vte-ng
 
 # i3-gaps
 sudo apt-get install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev \
