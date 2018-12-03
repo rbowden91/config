@@ -6,7 +6,7 @@ echo 'export PATH="$HOME/bin:$PATH"' >> ~/.profile
 source ~/.profile
 
 sudo apt-get update
-sudo apt-get install -y curl wget screen tmux
+sudo apt-get install -y curl wget screen tmux openssh-server net-tools
 
 cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 ~/.dropbox-dist/dropboxd
@@ -51,12 +51,8 @@ git config --global user.name "Rob Bowden"
 git config --global user.email "rbowden91@gmail.com"
 git config --global push.default simple
 
-mkdir -p ~/.ssh
-ln -s ~/'Dropbox (CS50)'/Identity/ssh/ssh_config ~/.ssh/config
-cp -s ~/'Dropbox (CS50)'/Identity/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
-cp -s ~/'Dropbox (CS50)'/Identity/ssh/id_rsa ~/.ssh/id_rsa
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/id_rsa
+ln -s ~/'Dropbox (CS50)'/Identity/ssh/ssh_config ~/.ssh
+chmod 600 ~/.ssh/*
 
 sudo dpkg-divert --divert /usr/bin/ssh.ssh-ident --rename /usr/bin/ssh
 wget -O ~/bin/ssh-ident https://raw.githubusercontent.com/ccontavalli/ssh-ident/master/ssh-ident
