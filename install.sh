@@ -51,7 +51,7 @@ git config --global user.name "Rob Bowden"
 git config --global user.email "rbowden91@gmail.com"
 git config --global push.default simple
 
-ln -s ~/'Dropbox (CS50)'/Identity/ssh/ssh_config ~/.ssh
+ln -s ~/'Dropbox (CS50)'/Identity/ssh ~/.ssh
 chmod 600 ~/.ssh/*
 
 sudo dpkg-divert --divert /usr/bin/ssh.ssh-ident --rename /usr/bin/ssh
@@ -68,6 +68,8 @@ cat >> ~/.bashrc << EOF
 export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 alias db='cd $HOME/"Dropbox (CS50)"'
 alias venv='source ~/venv/bin/activate'
+export DIR_AGENTS='$HOME/.ssh_agents'
+export SSH_ADD_DEFAULT_OPTIONS='-A'
 EOF
 
 
