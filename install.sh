@@ -6,7 +6,7 @@ echo 'export PATH="$HOME/bin:$PATH"' >> ~/.profile
 source ~/.profile
 
 sudo apt-get update
-sudo apt-get install -y curl wget screen tmux
+sudo apt-get install -y curl wget screen tmux numlockx
 
 cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 ~/.dropbox-dist/dropboxd
@@ -50,7 +50,7 @@ git config --global user.email "rbowden91@gmail.com"
 git config --global push.default simple
 
 mkdir -p ~/.ssh
-ln -s ~/'Dropbox (CS50)'/Identity/ssh/ssh_config ~/.ssh/config
+ln -s ~/'Dropbox (CS50)'/Identity/ssh/config ~/.ssh/config
 cp -s ~/'Dropbox (CS50)'/Identity/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
 cp -s ~/'Dropbox (CS50)'/Identity/ssh/id_rsa ~/.ssh/id_rsa
 chmod 700 ~/.ssh
@@ -64,12 +64,12 @@ sudo mv ~/bin/ssh-ident /usr/bin/ssh
 
 sudo apt-get install -y python3.6
 pip3 install virtualenv
-virtualenv --python=`which python3.6` ~/venv
+virtualenv --python=`which python3.6` ~/bin/venv
 
 cat >> ~/.bashrc << EOF
 export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 alias db='cd $HOME/"Dropbox (CS50)"'
-alias venv='source ~/venv/bin/activate'
+alias venv='source ~/bin/venv/bin/activate'
 EOF
 
 
@@ -93,3 +93,16 @@ make
 sudo make install
 cd ~
 rm -rf /tmp/i3-gaps
+
+# lemonbar for i3
+# TODO XXX
+#sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
+#mkdir -p ~/.fonts
+#cp -r .fonts/* ~/.fonts/
+#fc-cache -f
+#git clone https://github.com/krypt-n/bar.git
+#cd bar
+#make
+#sudo make install
+#cd ..
+#rm -rf bar
