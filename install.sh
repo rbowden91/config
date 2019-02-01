@@ -1,4 +1,4 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 # tested on Ubuntu 18.04
 
 mkdir -p ~/bin
@@ -6,7 +6,7 @@ echo 'export PATH="$HOME/bin:$PATH"' >> ~/.profile
 source ~/.profile
 
 sudo apt-get update
-sudo apt-get install -y curl wget screen tmux numlockx
+sudo apt-get install -y curl wget screen tmux openssh-server net-tools
 
 cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 ~/.dropbox-dist/dropboxd
@@ -14,6 +14,7 @@ read -p "Press any key once you've logged into Dropbox... " -n1 -s
 wget -O ~/bin/dropbox 'https://www.dropbox.com/download?dl=packages/dropbox.py'
 chmod 700 ~/bin/dropbox
 dropbox autostart y
+dropbox start &> /dev/null &
 
 # spotify
 sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 931FF8E79F0876134EDDBDCCA87FF9DF48BF1C90
@@ -34,9 +35,10 @@ sudo apt-get install -y chromium-browser
 xdg-settings set default-web-browser chromium-browser.desktop
 
 # TODO: hopefully files are here by now??
-cd ~/Dropbox*
+cd ~/"Dropbox (CS50)"
 dropbox exclude add *
 dropbox exclude remove Courses grad_school Identity
+sleep 3
 cd Courses
 dropbox exclude add *
 dropbox exclude remove cs50
@@ -49,12 +51,8 @@ git config --global user.name "Rob Bowden"
 git config --global user.email "rbowden91@gmail.com"
 git config --global push.default simple
 
-mkdir -p ~/.ssh
-ln -s ~/'Dropbox (CS50)'/Identity/ssh/config ~/.ssh/config
-cp -s ~/'Dropbox (CS50)'/Identity/ssh/id_rsa.pub ~/.ssh/id_rsa.pub
-cp -s ~/'Dropbox (CS50)'/Identity/ssh/id_rsa ~/.ssh/id_rsa
-chmod 700 ~/.ssh
-chmod 600 ~/.ssh/id_rsa
+ln -s ~/'Dropbox (CS50)'/Identity/ssh ~/.ssh
+chmod 600 ~/.ssh/*
 
 sudo dpkg-divert --divert /usr/bin/ssh.ssh-ident --rename /usr/bin/ssh
 wget -O ~/bin/ssh-ident https://raw.githubusercontent.com/ccontavalli/ssh-ident/master/ssh-ident
@@ -70,11 +68,14 @@ cat >> ~/.bashrc << EOF
 export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 alias db='cd $HOME/"Dropbox (CS50)"'
 alias venv='source ~/bin/venv/bin/activate'
+export DIR_AGENTS='$HOME/.ssh_agents'
+export SSH_ADD_DEFAULT_OPTIONS='-A'
 EOF
 
 
 # https://github.com/Corwind/termite-install/blob/master/termite-install.sh
 curl https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
+rm -rf ltmain.sh termite vte-ng
 
 # i3-gaps
 sudo apt-get install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev \
