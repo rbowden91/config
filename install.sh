@@ -31,6 +31,7 @@ sudo apt-get update
 sudo apt-get install -y teamviewer
 
 # chromium
+# TODO: instead, install Chrome
 sudo apt-get install -y chromium-browser
 xdg-settings set default-web-browser chromium-browser.desktop
 
@@ -60,7 +61,7 @@ sudo chmod 755 ~/bin/ssh-ident
 sudo chown root.root ~/bin/ssh-ident
 sudo mv ~/bin/ssh-ident /usr/bin/ssh
 
-sudo apt-get install -y python3.6
+sudo apt-get install -y python3.6 python3-pip
 pip3 install virtualenv
 virtualenv --python=`which python3.6` ~/bin/venv
 
@@ -69,13 +70,32 @@ export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 alias db='cd $HOME/"Dropbox (CS50)"'
 alias venv='source ~/bin/venv/bin/activate'
 export DIR_AGENTS='$HOME/.ssh_agents'
-export SSH_ADD_DEFAULT_OPTIONS='-A'
+export SSH_DEFAULT_OPTIONS='-A'
 EOF
 
 
-# https://github.com/Corwind/termite-install/blob/master/termite-install.sh
-curl https://raw.githubusercontent.com/Corwind/termite-install/master/termite-install.sh | sh
-rm -rf ltmain.sh termite vte-ng
+# install vte-ng (for termite)
+sudo apt-get install -y git g++ libgtk-3-dev gtk-doc-tools gnutls-bin valac intltool libpcre2-dev libglib3.0-cil-dev libgnutls28-dev libgirepository1.0-dev libxml2-utils gperf
+git clone https://github.com/thestinger/vte-ng.git
+export LIBRARY_PATH="/usr/include/gtk-3.0:$LIBRARY_PATH"
+cd vte-ng
+./autogen.sh
+make && sudo make install
+cd ..
+rm -rf vte-ng
+
+
+# install termite
+git clone --recursive https://github.com/thestinger/termite.git
+cd termite
+make
+sudo make install
+sudo ldconfig
+sudo mkdir -p /lib/terminfo/x
+sudo ln -s /usr/local/share/terminfo/x/xterm-termite /lib/terminfo/x/xterm-termite
+sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/termite 60
+cd ..
+rm -rf termite
 
 # i3-gaps
 sudo apt-get install -y libxcb1-dev libxcb-keysyms1-dev libpango1.0-dev \
