@@ -107,3 +107,23 @@ rm -rf /tmp/i3-gaps
 #sudo make install
 #cd ..
 #rm -rf bar
+
+# https://github.com/hastinbe/i3-volume
+# git clone https://github.com/hastinbe/i3-volume.git ~/i3-volume
+
+# https://github.com/junegunn/fzf#installation
+#brew install fzf
+#
+## To install useful key bindings and fuzzy completion:
+#$(brew --prefix)/opt/fzf/install
+#
+#git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+#~/.fzf/install
+
+# sudo pacman -S fzf
+
+
+# git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+
+# pavucontrol (volume)
+# xclip (for tmux copy-paste)
