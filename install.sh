@@ -180,7 +180,7 @@ EOF
 
 # pushover
 # https://mikebuss.com/2014/01/03/push-notifications-cli/
-add_to_file ~/.bashrc $(cat <<-'EOF'
+add_to_file ~/.bashrc "$(cat <<-'EOF'
 function push () {
     curl -s -F "token=a42feki7f68hvnqnqwpu7bjwjrv5fx" \
 	-F "user=uoo537r5jdq62sg8p545oa4vgbd3gs" \
@@ -188,7 +188,7 @@ function push () {
 	-F "message=$1" https://api.pushover.net/1/messages.json
 }
 EOF
-)
+)"
 
 # install vte-ng (for termite)
 sudo apt install -y --show-progress git g++ libgtk-3-dev gtk-doc-tools gnutls-bin valac intltool libpcre2-dev libglib3.0-cil-dev libgnutls28-dev libgirepository1.0-dev libxml2-utils gperf
