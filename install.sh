@@ -37,7 +37,7 @@ cd ~/repos/config
 git remote set-url --push origin git@github.com:rbowden91/config
 
 # vim
-curl https://raw.githubusercontent.com/rbowden91/vimrc/master/install.sh | sh
+curl https://raw.githubusercontent.com/rbowden91/vimrc/master/install.sh | bash
 cd ~/.vim
 git remote set-url --push origin git@github.com:rbowden91/vimrc
 
@@ -127,7 +127,7 @@ if [ ! -d ~/bin/venv ]; then
 fi
 add_to_file ~/.bashrc "alias venv='source ~/bin/venv/bin/activate'"
 
- latex / zathura / vimtex / etc.
+# latex / zathura / vimtex / etc.
 sudo apt install -y --show-progress texlive-full libsynctex-dev libgtk-3-dev \
     libmagic-dev xdotool check intltool sqlite3 check ninja-build \
     python3.6 python3-pip poppler-utils libpoppler-glib-dev
@@ -211,13 +211,12 @@ sudo mkdir -p /lib/terminfo/x
 sudo ln -s /usr/local/share/terminfo/x/xterm-termite /lib/terminfo/x/xterm-termite
 sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/termite 60
 
-# i3-gaps
-sudo apt install -y --show-progress libxcb1-dev libxcb-keysyms1-dev
+ i3-gaps
+sudo apt install -y --show-progress libxcb1-dev libxcb-keysyms1-dev \
     libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev \
-    libstartup-notification0-dev libxcb-randr0-dev \
-    libev-dev libxcb-cursor-dev libxcb-xinerama0-dev \
-    libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
-    autoconf libxcb-xrm0 libxcb-xrm-dev automake
+    libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev \
+    libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
+    autoconf xutils-dev libtool automake libcxb-xrm-dev
 git clone https://www.github.com/Airblader/i3 /tmp/config_install/i3-gaps
 cd /tmp/config_install/i3-gaps
 autoreconf --force --install
