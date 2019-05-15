@@ -225,4 +225,4 @@ exec --no-startup-id "i3-msg 'workspace 9; append_layout ~/.config/i3/workspaces
 
 exec --no-startup-id google-chrome
 exec --no-startup-id termite --title "termite server" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t server'\'')"'
-exec --no-startup-id termite --title "termite vim" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t vim'\'')"'
+exec --no-startup-id termite --title "termite vim" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t paper'\'')"'

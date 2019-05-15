@@ -105,6 +105,8 @@ wait_for_login () {
 while ! wait_for_login; do
     sleep 3
 done
+# TODO: do the directories have to exist first??
+cd "~/Dropbox (CS50)/"
 dropbox exclude add Apps nick Screenshots shared rob/selective
 
 # Spotify
@@ -258,3 +260,8 @@ sudo make install
 # xclip (for tmux copy-paste)
 
 rm -rf /tmp/config_install
+
+sudo apt-get install software-properties-common
+sudo add-apt-repository ppa:x2go/stable
+sudo apt-get update
+sudo apt-get install x2goserver x2goserver-xsession
