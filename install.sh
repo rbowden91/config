@@ -59,7 +59,7 @@ add_to_file ~/.profile "$(cat <<-'EOF'
 EOF
 )"
 source ~/.profile
-#
+
 # Chrome
 if ! sudo apt list 2> /dev/null | grep -q 'google-chrome-stable'; then
     wget -O /tmp/config_install/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
@@ -136,7 +136,7 @@ sudo apt install -y --show-progress texlive-full libsynctex-dev libgtk-3-dev \
 pip3 install --user docutils meson
 
 
-for i in girara zathura-pdf-poppler zathura; do
+for i in girara zathura zathura-pdf-poppler; do
     cd /tmp/config_install
     git clone https://git.pwmt.org/pwmt/$i.git
     cd $i
@@ -154,6 +154,13 @@ mkdir -p ~/.local/share/applications
 # TODO: may need to replace a prior application/pdf line?
 add_to_file ~/.local/share/applications/defaults.list 'application/pdf=zathura.desktop'
 
+# TODO: what does this do?
+# https://wikimatze.de/vimtex-the-perfect-tool-for-working-with-tex-and-vim/
+cd /tmp/config_install
+wget http://users.phys.psu.edu/%7Ecollins/software/latexmk-jcc/latexmk-445.zip
+unzip latexmk*.zip
+sudo cp latexmk/latexmk.pl /usr/local/bin/latexmk
+
 chmod 700 ~/repos/config/monitor.sh
 if [ ! -f /etc/udev/rules.d/98-monitor-hotplug.rules ]; then
     echo <<-EOF |
@@ -162,35 +169,28 @@ EOF
     sudo tee -a /etc/udev/rules.d/98-monitor-hotplug.rules
 fi
 
-# TODO: what does this do?
-# https://wikimatze.de/vimtex-the-perfect-tool-for-working-with-tex-and-vim/
-cd /tmp/config_install
-wget http://users.phys.psu.edu/%7Ecollins/software/latexmk-jcc/latexmk-445.zip
-unzip latexmk*.zip
-sudo cp latexmk/latexmk.pl /usr/local/bin/latexmk
-
- ssh-ident
-sudo dpkg-divert --divert /usr/bin/ssh.ssh-ident --rename /usr/bin/sshfifi
+# ssh-ident
+sudo dpkg-divert --divert /usr/bin/ssh.ssh-ident --rename /usr/bin/ssh
 sudo wget -O /usr/bin/ssh https://raw.githubusercontent.com/ccontavalli/ssh-ident/master/ssh-ident
 sudo chmod 755 /usr/bin/ssh
-add_to_file ~/.bashrc $(cat <<-'EOF'
+add_to_file ~/.bashrc "$(cat <<-'EOF'
 	export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 	export DIR_AGENTS='$HOME/.ssh_agents'
 	export SSH_DEFAULT_OPTIONS='-A'
 EOF
-)
+)"
 
 # pushover
 # https://mikebuss.com/2014/01/03/push-notifications-cli/
-add_to_file ~/.bashrc $(cat <<-'EOF'
+add_to_file ~/.bashrc "$(cat <<-'EOF'
 function push () {
-    curl -s -F "token=a42feki7f68hvnqnqwpu7bjwjrv5fx" \
-	-F "user=uoo537r5jdq62sg8p545oa4vgbd3gs" \
-	-F "title=YOUR_TITLE_HERE" \
-	-F "message=$1" https://api.pushover.net/1/messages.json
+    curl -s -F "token=a42feki7f68hvnqnqwpu7bjwjrv5fx" \\
+        -F "user=uoo537r5jdq62sg8p545oa4vgbd3gs" \\
+        -F "title=YOUR_TITLE_HERE" \\
+        -F "message=$1" https://api.pushover.net/1/messages.json
 }
 EOF
-)
+)"
 
 # install vte-ng (for termite)
 sudo apt install -y --show-progress git g++ libgtk-3-dev gtk-doc-tools gnutls-bin valac intltool libpcre2-dev libglib3.0-cil-dev libgnutls28-dev libgirepository1.0-dev libxml2-utils gperf
@@ -213,12 +213,12 @@ sudo mkdir -p /lib/terminfo/x
 sudo ln -s /usr/local/share/terminfo/x/xterm-termite /lib/terminfo/x/xterm-termite
 sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/termite 60
 
- i3-gaps
+# i3-gaps
 sudo apt install -y --show-progress libxcb1-dev libxcb-keysyms1-dev \
     libpango1.0-dev libxcb-util0-dev libxcb-icccm4-dev libyajl-dev \
     libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev \
     libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
-    autoconf xutils-dev libtool automake libcxb-xrm-dev
+    autoconf xutils-dev libtool automake libxcb-xrm-dev
 git clone https://www.github.com/Airblader/i3 /tmp/config_install/i3-gaps
 cd /tmp/config_install/i3-gaps
 autoreconf --force --install
@@ -227,6 +227,24 @@ mkdir -p build && cd build/
 ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
 make
 sudo make install
+
+if [ ! -d ~/.fzf ]; then
+    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+    yes | ~/.fzf/install
+fi
+
+# various tools for i3
+sudo apt install pavucontrol xclip alsamixer alsamixergui
+
+# https://github.com/hastinbe/i3-volume
+git clone https://github.com/hastinbe/i3-volume.git ~/.config/i3/i3-volume
+
+if [ ! -d ~/.tmux/plugins/tpm ]; then
+    mkdir -p ~/.tmux/plugins
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+rm -rf /tmp/config_install
 
 # lemonbar for i3
 # TODO XXX
@@ -239,29 +257,7 @@ sudo make install
 #make
 #sudo make install
 
-# https://github.com/hastinbe/i3-volume
-# git clone https://github.com/hastinbe/i3-volume.git ~/i3-volume
-
-# TODO: OSX
-# https://github.com/junegunn/fzf#installation
-#brew install fzf
-# To install useful key bindings and fuzzy completion:
-#$(brew --prefix)/opt/fzf/install
-
-#git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-#yes | ~/.fzf/install
-#
-#if [ ! -d ~/.tmux/plugins/tpm ]; then
-#    mkdir -p ~/.tmux/plugins
-#    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-#fi
-
-# pavucontrol (volume)
-# xclip (for tmux copy-paste)
-
-rm -rf /tmp/config_install
-
-sudo apt-get install software-properties-common
-sudo add-apt-repository ppa:x2go/stable
-sudo apt-get update
-sudo apt-get install x2goserver x2goserver-xsession
+#sudo apt-get install software-properties-common
+#sudo add-apt-repository ppa:x2go/stable
+#sudo apt-get update
+#sudo apt-get install x2goserver x2goserver-xsession
