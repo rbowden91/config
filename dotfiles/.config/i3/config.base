@@ -217,7 +217,7 @@ exec --no-startup-id xset fp+ ~/.fonts/terminesspowerline
 # xrandr | grep '*' | tr -s [:space:] | cut -f 2 -d ' '
 # https://github.com/ganifladi/blurme
 # TODO: monitor.sh needs to restart lemonbar
-exec --no-startup-id feh --bg-scale ~/.config/wallpapers/5120x1440/dark_valley.jpg
+exec --no-startup-id feh --nofehbg --bg-scale ~/.config/wallpapers/5120x1440/dark_valley.jpg
 #exec --no-startup-id ~/bin/blurme &
 exec --no-startup-id compton &
 #exec --no-startup-id irssi_cbit

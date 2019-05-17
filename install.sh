@@ -3,6 +3,8 @@
 
 set -e
 
+TMPDIR=/run/user/$UID/config_install
+
 function add_to_file () {
     local file="$1"
     # replace any special regex characters with '.' (so they're always matched). Not perfect, but good enough.
@@ -16,7 +18,7 @@ function add_to_file () {
     fi
 }
 
-mkdir -p /tmp/config_install
+mkdir -p "$TMPDIR"
 
 
 sudo apt update
@@ -62,8 +64,8 @@ source ~/.profile
 
 # Chrome
 if ! sudo apt list 2> /dev/null | grep -q 'google-chrome-stable'; then
-    wget -O /tmp/config_install/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-    sudo apt install -y --show-progress /tmp/config_install/chrome.deb
+    wget -O "$TMPDIR"/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+    sudo apt install -y --show-progress "$TMPDIR"/chrome.deb
 fi
 xdg-settings set default-web-browser google-chrome.desktop
 
@@ -117,8 +119,8 @@ sudo apt install -y --show-progress spotify-client
 
 # TeamViewer
 if ! sudo apt list 2> /dev/null | grep -q 'teamviewer.*installed'; then
-    wget -O /tmp/config_install/teamviewer.deb https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
-    sudo apt install -y --show-progress /tmp/config_install/teamviewer.deb
+    wget -O "$TMPDIR"/teamviewer.deb https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+    sudo apt install -y --show-progress "$TMPDIR"/teamviewer.deb
 fi
 
 # virtualenv
@@ -137,7 +139,7 @@ pip3 install --user docutils meson
 
 
 for i in girara zathura zathura-pdf-poppler; do
-    cd /tmp/config_install
+    cd "$TMPDIR"
     git clone https://git.pwmt.org/pwmt/$i.git
     cd $i
     git checkout --track -b develop origin/master
@@ -156,7 +158,7 @@ add_to_file ~/.local/share/applications/defaults.list 'application/pdf=zathura.d
 
 # TODO: what does this do?
 # https://wikimatze.de/vimtex-the-perfect-tool-for-working-with-tex-and-vim/
-cd /tmp/config_install
+cd "$TMPDIR"
 wget http://users.phys.psu.edu/%7Ecollins/software/latexmk-jcc/latexmk-445.zip
 unzip latexmk*.zip
 sudo cp latexmk/latexmk.pl /usr/local/bin/latexmk
@@ -194,7 +196,7 @@ EOF
 
 # install vte-ng (for termite)
 sudo apt install -y --show-progress git g++ libgtk-3-dev gtk-doc-tools gnutls-bin valac intltool libpcre2-dev libglib3.0-cil-dev libgnutls28-dev libgirepository1.0-dev libxml2-utils gperf
-cd /tmp/config_install
+cd "$TMPDIR"
 git clone https://github.com/thestinger/vte-ng.git
 export LIBRARY_PATH="/usr/include/gtk-3.0:$LIBRARY_PATH"
 cd vte-ng
@@ -203,7 +205,7 @@ make && sudo make install
 
 
 # install termite
-cd /tmp/config_install
+cd "$TMPDIR"
 git clone --recursive https://github.com/thestinger/termite.git
 cd termite
 make
@@ -219,8 +221,8 @@ sudo apt install -y --show-progress libxcb1-dev libxcb-keysyms1-dev \
     libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev \
     libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
     autoconf xutils-dev libtool automake libxcb-xrm-dev
-git clone https://www.github.com/Airblader/i3 /tmp/config_install/i3-gaps
-cd /tmp/config_install/i3-gaps
+git clone https://www.github.com/Airblader/i3 "$TMPDIR"/i3-gaps
+cd "$TMPDIR"/i3-gaps
 autoreconf --force --install
 rm -rf build/
 mkdir -p build && cd build/
@@ -234,28 +236,32 @@ if [ ! -d ~/.fzf ]; then
 fi
 
 # various tools for i3
-sudo apt install pavucontrol xclip alsamixer alsamixergui
+sudo apt -y install pavucontrol xclip alsamixergui dunst compton conky suckless-tools ranger feh pulseaudio-utils xprop mpd mpc rofi
 
 # https://github.com/hastinbe/i3-volume
-git clone https://github.com/hastinbe/i3-volume.git ~/.config/i3/i3-volume
+#git clone https://github.com/hastinbe/i3-volume.git dotfiles/.config/i3/
 
 if [ ! -d ~/.tmux/plugins/tpm ]; then
     mkdir -p ~/.tmux/plugins
     git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 fi
 
-rm -rf /tmp/config_install
-
 # lemonbar for i3
 # TODO XXX
-#sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
-#mkdir -p ~/.fonts
-#cp -r .fonts/* ~/.fonts/
-#fc-cache -f
-#git clone https://github.com/krypt-n/bar.git
-#cd bar
-#make
-#sudo make install
+sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
+git clone https://github.com/krypt-n/bar.git "$TMPDIR"/bar
+cd "$TMPDIR"/bar
+make
+sudo make install
+
+sudo apt -y install stow
+mkdir -p ~/.fonts
+cd ~/repos/config
+stow -d . -t ~ dotfiles
+fc-cache -f
+
+rm -rf "$TMPDIR"
+
 
 #sudo apt-get install software-properties-common
 #sudo add-apt-repository ppa:x2go/stable
@@ -263,4 +269,3 @@ rm -rf /tmp/config_install
 #sudo apt-get install x2goserver x2goserver-xsession
 
 # https://askubuntu.com/questions/51445/how-do-i-calibrate-a-touchscreen-on-a-dual-monitor-system
-#stow -n -d . -t ~ dotfiles
