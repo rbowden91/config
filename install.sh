@@ -261,3 +261,6 @@ rm -rf /tmp/config_install
 #sudo add-apt-repository ppa:x2go/stable
 #sudo apt-get update
 #sudo apt-get install x2goserver x2goserver-xsession
+
+# https://askubuntu.com/questions/51445/how-do-i-calibrate-a-touchscreen-on-a-dual-monitor-system
+#stow -n -d . -t ~ dotfiles

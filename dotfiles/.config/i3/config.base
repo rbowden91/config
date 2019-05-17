@@ -217,18 +217,9 @@ exec --no-startup-id xset fp+ ~/.fonts/terminesspowerline
 # xrandr | grep '*' | tr -s [:space:] | cut -f 2 -d ' '
 # https://github.com/ganifladi/blurme
 # TODO: monitor.sh needs to restart lemonbar
-exec_always --no-startup-id feh --bg-scale ~/.config/wallpapers/5120x1440/dark_valley.jpg
+exec --no-startup-id feh --bg-scale ~/.config/wallpapers/5120x1440/dark_valley.jpg
 #exec --no-startup-id ~/bin/blurme &
 exec --no-startup-id compton &
 #exec --no-startup-id irssi_cbit
 #exec --no-startup-id xfsettingsd
 #exec --no-startup-id nm-applet
-exec --no-startup-id i3-msg 'workspace 1; append_layout ~/.config/i3/workspaces/workspace-1.json'
-exec --no-startup-id i3-msg 'workspace 9; append_layout ~/.config/i3/workspaces/workspace-9.json'
-exec --no-startup-id xinput map-to-output 'G2Touch Multi-Touch by G2TSP' HDMI-A-1
-
-
-exec --no-startup-id google-chrome
-#exec --no-startup-id spotify
-exec --no-startup-id termite --title "termite server" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t server'\'')"'
-exec --no-startup-id termite --title "termite vim" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t paper'\'')"'
