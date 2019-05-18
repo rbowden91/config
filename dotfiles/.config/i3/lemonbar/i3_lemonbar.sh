@@ -4,10 +4,10 @@
 
 . $(dirname $0)/i3_lemonbar_config
 
-if [ $(pgrep -cx $(basename $0)) -gt 1 ] ; then
-    printf "%s\n" "The status bar is already running." >&2
-    exit 1
-fi
+#if [ $(pgrep -cx $(basename $0)) -gt 1 ] ; then
+#    printf "%s\n" "The status bar is already running." >&2
+#    exit 1
+#fi
 
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
@@ -64,7 +64,7 @@ done &
 #### LOOP FIFO
 
 cat "${panel_fifo}" | $(dirname $0)/i3_lemonbar_parser.sh \
-  | lemonbar -p -f "${font}" -f "${iconfont}" -g "${geometry}" -B "${color_back}" -F "${color_fore}" &
+  | lemonbar -p -b -f "${font}" -f "${iconfont}" -g "${geometry}" -B "${color_back}" -F "${color_fore}"
 
 wait
 

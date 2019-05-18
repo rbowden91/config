@@ -248,6 +248,7 @@ fi
 
 # lemonbar for i3
 # TODO XXX
+sudo apt install libanyevent-i3-perl fonts-font-awesome
 sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
 git clone https://github.com/krypt-n/bar.git "$TMPDIR"/bar
 cd "$TMPDIR"/bar
