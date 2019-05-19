@@ -20,7 +20,6 @@ function add_to_file () {
 
 mkdir -p "$TMPDIR"
 
-
 sudo apt update
 sudo apt install -y --show-progress curl wget screen tmux openssh-server net-tools git pcregrep
 git config --global user.name "Rob Bowden"
@@ -237,6 +236,7 @@ fi
 
 # various tools for i3
 sudo apt -y install pavucontrol xclip alsamixergui dunst compton conky suckless-tools ranger feh pulseaudio-utils xprop mpd mpc rofi
+pip install i3-py
 
 # https://github.com/hastinbe/i3-volume
 #git clone https://github.com/hastinbe/i3-volume.git dotfiles/.config/i3/
@@ -248,7 +248,7 @@ fi
 
 # lemonbar for i3
 # TODO XXX
-sudo apt install libanyevent-i3-perl fonts-font-awesome
+sudo apt install fonts-font-awesome
 sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
 git clone https://github.com/krypt-n/bar.git "$TMPDIR"/bar
 cd "$TMPDIR"/bar
@@ -270,3 +270,4 @@ rm -rf "$TMPDIR"
 #sudo apt-get install x2goserver x2goserver-xsession
 
 # https://askubuntu.com/questions/51445/how-do-i-calibrate-a-touchscreen-on-a-dual-monitor-system
+pip3 install pywal
