@@ -101,6 +101,10 @@ mono:
 	sudo apt update
 	sudo apt install -y mono-complete
 
+vimiv:
+	sudo apt install -y libgexiv2-2
+	DESTDIR="${HOME}" PREFIX="/.local" make -e install
+
 vim: fzf rust local-bin mono
 	# Dependencies:
 	# build-essential, cmake, python3-dev: YouCompleteMe (https://github.com/Valloric/YouCompleteMe)
@@ -184,7 +188,7 @@ vim: fzf rust local-bin mono
 	sudo gem install starscope
 	sudo npm install -g typescript
 	cd "${CONFIG}/subrepos/vim"
-	./configure --prefix="${HOME}/bin" \
+	./configure --prefix="${HOME}/.local/bin" \
 	    --enable-gui=yes \
 	    --disable-nls \
 	    --enable-multibyte \
@@ -208,7 +212,7 @@ vim: fzf rust local-bin mono
 	./install.py --cs-completer --go-completer --rust-completer --java-completer --clang-completer
 
 local-bin:
-	mkdir -p ~/bin # ~/.local/bin
+	mkdir -p ~/.local/bin
 	# putting the `-` after `<<` allows you to put tabs for formatting that will be ignored
 	# putting `'` around `EOF` makes it so variables aren't interpolated
 	#add_to_file ~/.profile "$(cat <<-'EOF'
@@ -219,9 +223,9 @@ local-bin:
 	#EOF
 	#)"
 	add_to_file ~/.profile "$(cat <<-'EOF'
-		# set PATH so it includes user private bin if it exists
-		if [ -d "${HOME}/bin" ] ; then
-		    PATH="${HOME}/bin:${PATH}"
+		# set PATH so it includes user\'s private bin if it exists
+		if [ -d "${HOME}/.local/bin" ] ; then
+		    PATH="${HOME}/.local/bin:${PATH}"
 		fi
 	EOF
 	)"
@@ -238,9 +242,9 @@ dropbox:
 	if [ ! -d ~/.dropbox-dist ]; then
 	    cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
 	fi
-	if [ ! -f ~/bin/dropbox ]; then
-	    wget -O ~/bin/dropbox 'https://www.dropbox.com/download?dl=packages/dropbox.py'
-	    chmod 700 ~/bin/dropbox
+	if [ ! -f ~/.local/bin/dropbox ]; then
+	    wget -O ~/.local/bin/dropbox 'https://www.dropbox.com/download?dl=packages/dropbox.py'
+	    chmod 700 ~/.local/bin/dropbox
 	fi
 	
 	if [ ! $(dropbox running) ]; then
@@ -291,12 +295,12 @@ teamviewer:
 
 virtualenv:
 	# virtualenv
-	if [ ! -d ~/bin/venv ]; then
+	if [ ! -d ~/.local/bin/venv ]; then
 	    sudo apt install -y --show-progress python3.6 python3-pip
 	    pip3 install --user virtualenv
-	    virtualenv --python=`which python3.6` ~/bin/venv
+	    virtualenv --python=`which python3.6` ~/.local/bin/venv
 	fi
-	add_to_file ~/.bashrc "alias venv='source ~/bin/venv/bin/activate'"
+	add_to_file ~/.bashrc "alias venv='source ~/.local/bin/venv/bin/activate'"
 
 latex:
 	# latex / zathura / vimtex / etc.
@@ -405,8 +409,7 @@ i3-lock:
 
 betterlockscreen: i3-lock
 	# https://github.com/pavanjadhaw/betterlockscreen
-	sudo apt install -y imagemagick x11-xserver-utils bc feh
-	ln -s "${CONFIG}/subrepos/betterlockscreen/betterlockscreen" "${HOME}/bin/"
+	#sudo apt install -y imagemagick x11-xserver-utils bc feh
 	#betterlockscreen -u ${HOME}/.wallpapers/XXX/xx.jpg
 	sudo apt install -y ffmpeg
 
