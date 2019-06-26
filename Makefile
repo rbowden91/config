@@ -464,3 +464,10 @@ tmux:
 	    mkdir -p ~/.tmux/plugins
 	    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 	fi
+
+zsh:
+	sudo apt install zsh
+	chsh -s $(which zsh)
+	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	sudo apt install fonts-powerline
+

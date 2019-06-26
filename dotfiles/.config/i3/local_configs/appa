@@ -1,9 +1,13 @@
-exec --no-startup-id i3-msg 'workspace 1; append_layout ~/.config/i3/workspaces/workspace-1.json'
-exec --no-startup-id i3-msg 'workspace 9; append_layout ~/.config/i3/workspaces/workspace-9.json'
-exec --no-startup-id xinput map-to-output 'G2Touch Multi-Touch by G2TSP' HDMI-A-1
+exec --no-startup-id ~/.local/bin/fix_monitor
 
+exec --no-startup-id i3-msg 'workspace 1; append_layout ~/.config/i3/workspaces/workspace-1.json'
+exec --no-startup-id i3-msg 'workspace 9; append_layout ~/.config/i3/workspaces/teamviewer.json'
+
+for_window [class="Spotify"] move to workspace 2
 
 exec --no-startup-id google-chrome
-#exec --no-startup-id spotify
+exec --no-startup-id spotify
 exec --no-startup-id termite --title "termite server" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t server'\'')"'
 exec --no-startup-id termite --title "termite vim" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t paper'\'')"'
+
+exec --no-startup-id i3-msg 'workspace 1'

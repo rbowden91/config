@@ -6,7 +6,6 @@ After=network.target
 Type=forking
 User=rbowden
 Group=rbowden
-Alias=dropboxd
 ExecStart=/home/rbowden/bin/dropbox start
 ExecStop=/home/rbowden/bin/dropbox stop
 PIDFile=/home/rbowden/.dropbox/dropbox.pid
