@@ -1,4 +1,5 @@
-.ONESHELL:
+#.ONESHELL:
+
 #sudo apt-get install software-properties-common
 #sudo add-apt-repository ppa:x2go/stable
 #sudo apt-get update
@@ -7,11 +8,8 @@
 # https://askubuntu.com/questions/51445/how-do-i-calibrate-a-touchscreen-on-a-dual-monitor-system
 #pip3 install pywal
 
-SHELL := /bin/bash
-
 PREFIX:="${HOME}/repos/"
 CONFIGNAME:="rbconfig"
-
 CONFIG:="${PREFIX}${CONFIGNAME}"
 
 #if [ -f /etc/os-release ]; then
@@ -330,7 +328,7 @@ latex:
 	
 	# TODO: what does this do?
 	# https://wikimatze.de/vimtex-the-perfect-tool-for-working-with-tex-and-vim/
-	cd "$TMPDIR"
+	cd "${TMPDIR}"
 	wget http://users.phys.psu.edu/%7Ecollins/software/latexmk-jcc/latexmk-445.zip
 	unzip latexmk*.zip
 	sudo cp latexmk/latexmk.pl /usr/local/bin/latexmk
@@ -421,7 +419,7 @@ i3-gaps:
 	    libstartup-notification0-dev libxcb-randr0-dev libev-dev libxcb-cursor-dev \
 	    libxcb-xinerama0-dev libxcb-xkb-dev libxkbcommon-dev libxkbcommon-x11-dev \
 	    autoconf xutils-dev libtool automake libxcb-xrm-dev
-	git clone https://www.github.com/Airblader/i3 "$TMPDIR"/i3-gaps
+	git clone https://www.github.com/Airblader/i3 "${TMPDIR}"/i3-gaps
 	cd "${TMPDIR}"/i3-gaps
 	autoreconf --force --install
 	rm -rf build/
@@ -447,18 +445,17 @@ lemonbar:
 	sudo make install
 
 dotfiles:
-	sudo apt -y install stow
+	sudo apt -qq -y install stow
 	mkdir -p ~/.fonts
-	cd "${CONFIG}"
-	stow -d . -t ~ dotfiles
+	stow -d "${CONFIG}" -t ~ dotfiles
 	fc-cache -f
-	rm -rf "${TMPDIR}"
 
-fzf:
-	if [ ! -d ~/.fzf ]; then
-	    git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
-	    ~/.fzf/install --key-bindings --completion --update-rc
-	fi
+#fzf:
+#ifeq ("$(wildcard ${HOME}/.fzf)","")
+#	git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
+#	~/.fzf/install --key-bindings --completion --update-rc
+#endif
+
 tmux:
 	if [ ! -d ~/.tmux/plugins/tpm ]; then
 	    mkdir -p ~/.tmux/plugins
@@ -466,8 +463,6 @@ tmux:
 	fi
 
 zsh:
-	sudo apt install zsh
-	chsh -s $(which zsh)
-	sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-	sudo apt install fonts-powerline
+	sudo apt -qq install zsh fonts-powerline
+	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 
