@@ -1,0 +1,2 @@
+!remap caps lock to escape
+keycode 66 = Escape NoSymbol Escape

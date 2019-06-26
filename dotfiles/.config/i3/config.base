@@ -201,28 +201,25 @@ bindsym XF86AudioMute        exec $volumepath/volume -mn -t $statuscmd -u $statu
 
 # AUTOSTART
 
+# X settings
 exec --no-startup-id numlockx on
 # turn off display sleep settings
 exec --no-startup-id xset s off
 exec --no-startup-id xset -dpms
+exec --no-startup-id xset fp+ ~/.fonts/misc
+exec --no-startup-id xset fp+ ~/.fonts/terminesspowerline
+#exec --no-startup-id xmodmap ~/.xmodmap
+#exec --no-startup-id xset r rate 250 35
+
 # xrandr --output HDMI-A-0 --mode 2560x1440
 
 # TODO: automatically change this based on screen resolution
 # xrandr | grep '*' | tr -s [:space:] | cut -f 2 -d ' '
 # https://github.com/ganifladi/blurme
-exec --no-startup-id feh --bg-scale ~/.config/wallpapers/5120x1440/dark_valley.jpg
+# TODO: monitor.sh needs to restart lemonbar
+exec --no-startup-id feh --nofehbg --bg-scale ~/.wallpapers/5120x1440/dark_valley.jpg
 #exec --no-startup-id ~/bin/blurme &
 exec --no-startup-id compton &
 #exec --no-startup-id irssi_cbit
 #exec --no-startup-id xfsettingsd
 #exec --no-startup-id nm-applet
-#exec --no-startup-id xset r rate 250 35
-#exec --no-startup-id xmodmap ~/.xmodmap
-
-
-exec --no-startup-id "i3-msg 'workspace 1; append_layout ~/.config/i3/workspaces/workspace-1.json'"
-exec --no-startup-id "i3-msg 'workspace 9; append_layout ~/.config/i3/workspaces/workspace-9.json'"
-
-exec --no-startup-id google-chrome
-exec --no-startup-id termite --title "termite server" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t server'\'')"'
-exec --no-startup-id termite --title "termite vim" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t vim'\'')"'
