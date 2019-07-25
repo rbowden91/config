@@ -81,9 +81,6 @@ default:
 
 git:
 	sudo apt install -y git
-	git config --global user.name "Rob Bowden"
-	git config --global user.email "rbowden91@gmail.com"
-	git config --global push.default simple
 
 rust:
 	# TODO: didn't seem to work for Arch
@@ -198,7 +195,7 @@ vim: fzf rust local-bin mono
 	    --with-features=huge
 	make
 	make install
-	add_to_file ~/.bashrc "$(cat <<-'EOF'
+	add_to_file ~/.generic_profile "$(cat <<-'EOF'
 		export EDITOR='vim'
 	EOF
 	)"
@@ -254,7 +251,7 @@ dropbox:
 	sudo systemctl enable dropbox.service
 	ln -s ~/'Dropbox (CS50)'/rob/identity/ssh ~/.ssh
 	ln -s ~/'Dropbox (CS50)'/rob/wallpapers ~/.wallpapers
-	add_to_file ~/.bashrc "alias db='cd \${HOME}/\"Dropbox (CS50)\"'"
+	add_to_file ~/.generic_profile "alias db='cd \${HOME}/\"Dropbox (CS50)\"'"
 	
 	# TODO: change this to detect when things have gone through
 	
@@ -298,7 +295,7 @@ virtualenv:
 	    pip3 install --user virtualenv
 	    virtualenv --python=`which python3.6` ~/.local/bin/venv
 	fi
-	add_to_file ~/.bashrc "alias venv='source ~/.local/bin/venv/bin/activate'"
+	add_to_file ~/.generic_profile "alias venv='source ~/.local/bin/venv/bin/activate'"
 
 latex:
 	# latex / zathura / vimtex / etc.
@@ -348,7 +345,7 @@ ssh-ident:
 	sudo dpkg-divert --divert /usr/bin/ssh.ssh-ident --rename /usr/bin/ssh
 	sudo wget -O /usr/bin/ssh https://raw.githubusercontent.com/ccontavalli/ssh-ident/master/ssh-ident
 	sudo chmod 755 /usr/bin/ssh
-	add_to_file ~/.bashrc "$(cat <<-'EOF'
+	add_to_file ~/.generic_profile "$(cat <<-'EOF'
 		export BINARY_SSH="/usr/bin/ssh.ssh-ident"
 		export DIR_AGENTS='${HOME}/.ssh_agents'
 		export SSH_DEFAULT_OPTIONS='-A'
@@ -358,7 +355,7 @@ ssh-ident:
 pushover:
 	# pushover
 	# https://mikebuss.com/2014/01/03/push-notifications-cli/
-	add_to_file ~/.bashrc "$(cat <<-'EOF'
+	add_to_file ~/.generic_profile "$(cat <<-'EOF'
 	function push () {
 	    curl -s -F "token=a42feki7f68hvnqnqwpu7bjwjrv5fx" \\
 	        -F "user=uoo537r5jdq62sg8p545oa4vgbd3gs" \\
@@ -389,7 +386,7 @@ termite: vte-ng
 	sudo mkdir -p /lib/terminfo/x
 	sudo ln -s /usr/local/share/terminfo/x/xterm-termite /lib/terminfo/x/xterm-termite
 	sudo update-alternatives --install /usr/bin/x-terminal-emulator x-terminal-emulator /usr/local/bin/termite 60
-	add_to_file ~/.bashrc $(cat <<-'EOF'
+	add_to_file ~/.generic_profile $(cat <<-'EOF'
 		export TERMINAL='termite'
 	EOF
 	)
@@ -457,12 +454,21 @@ dotfiles:
 #endif
 
 tmux:
-	if [ ! -d ~/.tmux/plugins/tpm ]; then
-	    mkdir -p ~/.tmux/plugins
-	    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-	fi
+ifeq ("$(wildcard ${HOME}/.tmux/plugins/tpm)","")
+	mkdir -p ~/.tmux/plugins
+	git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+endif
 
 zsh:
 	sudo apt -qq install zsh fonts-powerline
 	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-
+	# TODO: pull from subrepos?
+	ln -s "${CONFIG}/subrepos/zsh-syntax-highlighting" "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
+	ln -s "${CONFIG}/subrepos/zsh-autosuggestions" "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
+	ln -s "${CONFIG}/subrepos/powerlevel9k" "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k"
+	# need to stow first
+	# also, add this to .bashrc
+	add_to_file ~/.zshrc "$(cat <<-'EOF'
+	    source "${HOME}/.generic_profile"
+	EOF
+	)"
