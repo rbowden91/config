@@ -17,9 +17,9 @@
 # https://askubuntu.com/questions/51445/how-do-i-calibrate-a-touchscreen-on-a-dual-monitor-system
 #pip3 install pywal
 
-PREFIX:="${HOME}/repos/"
-CONFIGNAME:="rbconfig"
-CONFIG:="${PREFIX}${CONFIGNAME}"
+PREFIX:=${HOME}/repos/
+CONFIGNAME:=rbconfig
+CONFIG:=${PREFIX}${CONFIGNAME}
 
 #if [ -f /etc/os-release ]; then
 #    # freedesktop.org and systemd
@@ -469,15 +469,15 @@ ifeq ("$(wildcard ${HOME}/.tmux/plugins/tpm)","")
 endif
 
 zsh:
-	sudo apt -qq install zsh fonts-powerline
-	sh -c "$$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	#sudo apt -qq install zsh fonts-powerline
+	#sh -c "$$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
 	# TODO: pull from subrepos?
-	ln -s "${CONFIG}/subrepos/zsh-syntax-highlighting" "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
-	ln -s "${CONFIG}/subrepos/zsh-autosuggestions" "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
-	ln -s "${CONFIG}/subrepos/powerlevel9k" "${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/powerlevel9k"
+	ln -s "${CONFIG}/subrepos/zsh-syntax-highlighting" "${HOME}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+	ln -s "${CONFIG}/subrepos/zsh-autosuggestions" "${HOME}/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+	ln -s "${CONFIG}/subrepos/powerlevel9k" "${HOME}/.oh-my-zsh/custom/themes/powerlevel9k"
 	# need to stow first
 	# also, add this to .bashrc
-	add_to_file ~/.zshrc "$(cat <<-'EOF'
-	    source "${HOME}/.generic_profile"
-	EOF
-	)"
+	#add_to_file ~/.zshrc "$$(cat <<-'EOF'
+	#    source "$${HOME}/.generic_profile"
+	#EOF
+	#)"

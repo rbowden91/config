@@ -159,9 +159,11 @@ bindsym XF86AudioRaiseVolume exec $volumepath/volume -np -i $volumestep -t $stat
 bindsym XF86AudioLowerVolume exec $volumepath/volume -np -d $volumestep -t $statuscmd -u $statussig
 bindsym XF86AudioMute        exec $volumepath/volume -mn -t $statuscmd -u $statussig
 
+exec --no-startup-id feh --nofehbg --bg-scale ~/.wallpapers/5120x1440/dark_valley.jpg
 
 # AUTOSTART
 
 # https://github.com/ganifladi/blurme
 #exec --no-startup-id ~/.local/bin/blurme &
 exec --no-startup-id compton &
+exec vmware-user-suid-wrapper --no-startup-id
