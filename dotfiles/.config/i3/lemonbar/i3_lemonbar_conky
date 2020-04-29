@@ -27,11 +27,12 @@ LOAD1="${loadavg 1}"
 LOAD2="${loadavg 2}"
 LOAD3="${loadavg 3}" \
 CAL="${time %a %d %b}" \
-TIME="${time %H:%M}" \
+TIME="${time %l:%M%p}" \
 SEC="${time %S}" \
 ]]
 
 --[[
+-- %I in time gives hour with preceding 0
 mpd stuf
 ${texeci 1800 curl -s wttr.in/02138 | sed -n '3,7{s/\d27[\[0-9;]*m//g;s/^..//;s/ *$//;p}'} \
 ${fs_used_perc /home}
