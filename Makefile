@@ -1,9 +1,18 @@
 #.ONESHELL:
 
+# screenshots/xwd: http://blog.tordeu.com/?p=135%20screenshots
+# ntfy: https://github.com/dschep/ntfy
+# bash-preexec: https://github.com/rcaloras/bash-preexec
+# xmodmap: https://cs.gmu.edu/~sean/stuff/n800/keyboard/old.html
+
 #sudo apt-get install software-properties-common
 #sudo add-apt-repository ppa:x2go/stable
 #sudo apt-get update
 #sudo apt-get install x2goserver x2goserver-xsession xbacklight redshift redshift-gtk
+# jq
+
+#sudo apt install mosh
+
 
 # https://askubuntu.com/questions/51445/how-do-i-calibrate-a-touchscreen-on-a-dual-monitor-system
 #pip3 install pywal
