@@ -1,0 +1,56 @@
+
+/*
+i3-lock:
+	# https://github.com/PandorasFox/i3lock-color
+	sudo apt install -y --show-progress pkg-config libxcb1 libxcb-util1 libpam0g-dev libcairo2-dev \
+	    libfontconfig1-dev libxcb-composite0 libxcb-composite0-dev libxcb-xinerama0 libxcb-randr0 \
+	    libev4 libx11-xcb-dev libxkbcommon0 libxkbcommon-x11-0 libjpeg-turbo8 libjpeg8-dev libjpeg-turbo8-dev libxcb-shape0-dev
+	git submodule update i3lock-color
+	cd subrepos/i3lock-color
+	autoreconf -i
+	./configure
+	make
+	sudo make install
+
+betterlockscreen: i3-lock
+	# https://github.com/pavanjadhaw/betterlockscreen
+	#sudo apt install -y imagemagick x11-xserver-utils bc feh
+	#betterlockscreen -u ${HOME}/.wallpapers/XXX/xx.jpg
+	sudo apt install -y ffmpeg
+
+lemonbar:
+	# TODO XXX
+	sudo apt install -y fonts-font-awesome libx11-xcb-dev
+	sudo rm /etc/fonts/conf.d/70-no-bitmaps.conf
+	sudo pip3 install i3-py
+	git clone https://github.com/krypt-n/bar.git "${TMPDIR}"/bar
+	cd "${TMPDIR}"/bar
+	make
+	sudo make install
+
+*/
+{
+    packages: [
+	pavucontrol
+	xclip
+	alsamixergui
+	dunst
+	compton
+	conky
+	suckless-tools
+	ranger
+	feh
+	pulseaudio-utils
+	x11-utils
+	mpd
+	mpc
+	rofi
+    ]
+    pip3: [
+        i3-py
+    ]
+    install: [
+	sudo dpkg-divert --divert /usr/bin/dmenu.rbconfnig --rename /usr/bin/dmenu
+	sudo ln -s /usr/bin/rofi /usr/bin/dmenu
+    ]
+}

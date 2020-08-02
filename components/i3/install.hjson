@@ -1,0 +1,44 @@
+{
+        // technically i3-gaps
+        packages: [
+            autoconf
+            automake
+            libtool
+            xutils-dev
+
+            libxcb1-dev
+            libxcb-keysyms1-dev
+            libxcb-cursor-dev
+            libxcb-xinerama0-dev
+            libxcb-util0-dev
+            libxcb-icccm4-dev
+            libxcb-randr0-dev
+            libxcb-xrm-dev
+            libxcb-shape0-dev
+            libxcb-xkb-dev
+            libxkbcommon-dev
+            libxkbcommon-x11-dev
+            // we need AnyEvent to save workspaces with i3-save-tree
+            libanyevent-i3-perl
+            libpango1.0-dev
+            libyajl-dev
+            libev-dev
+            libstartup-notification0-dev
+        ]
+        install: [
+            #git submodule update subrepos/i3
+            cd i3
+            autoreconf --force --install
+            rm -rf build/
+            mkdir -p build && cd build/
+            ../configure --prefix=/usr --sysconfdir=/etc --disable-sanitizers
+            make -j8
+            sudo make install
+        ]
+}
+
+
+# for i3_workspaces.py / pygobject
+sudo apt install libgirepository1.0-dev gcc libcairo2-dev pkg-config python3-dev gir1.2-gtk-3.0
+pip3 install pycairo
+pip3 install PyGObject

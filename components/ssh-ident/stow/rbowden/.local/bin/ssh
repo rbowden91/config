@@ -1,0 +1,1 @@
+FILE_USER_CONFIG="${HOME}/.config/ssh/ssh-ident" ssh-ident "$@"

@@ -1,0 +1,19 @@
+# https://www.linuxuprising.com/2018/05/how-to-permanently-change-mac-address.html
+# To enable, use:
+# sudo systemctl enable changemac@enp10s0.service
+# https://superuser.com/questions/728951/systemd-giving-my-service-multiple-arguments
+
+[Unit]
+Description=changes mac for %I
+Wants=network.target
+Before=network.target
+BindsTo=sys-subsystem-net-devices-%i.device
+After=sys-subsystem-net-devices-%i.device
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/macchanger --mac=78:D2:94:49:D6:94 %I
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

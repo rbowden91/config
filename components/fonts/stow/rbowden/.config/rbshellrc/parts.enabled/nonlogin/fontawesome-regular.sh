@@ -1,0 +1,1 @@
+../../parts.available/fontawesome-regular.sh

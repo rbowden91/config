@@ -1,0 +1,2 @@
+#!/bin/sh
+ifconfig | grep 'inet 192.168.88.' &> /dev/null

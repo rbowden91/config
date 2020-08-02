@@ -1,0 +1,13 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "percent": 1.0,
+    "swallows": [
+       {
+       "class": "^Google-chrome$"
+       }
+    ],
+    "type": "con"
+}

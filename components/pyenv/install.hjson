@@ -1,0 +1,12 @@
+{
+	packages: [
+		curl
+		bash
+	]
+	install: [
+		export PYENV_ROOT="${XDG_CONFIG_HOME}/pyenv"
+		curl https://pyenv.run | bash
+		stow
+	]
+
+}

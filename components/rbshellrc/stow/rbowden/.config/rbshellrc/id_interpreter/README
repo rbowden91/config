@@ -1,0 +1,4 @@
+https://unix.stackexchange.com/questions/71121/determine-shell-in-script-during-runtime
+
+"Maybe not what you're asking for, but this should work to some extent to
+identify the interpreter currently interpreting it for a few like..."

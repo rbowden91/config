@@ -1,0 +1,12 @@
+{
+    packages: [
+	mlocate
+    ]
+    subrepos: {
+    }
+    files: {
+    }
+    install: {
+    	updatedb
+    }
+}

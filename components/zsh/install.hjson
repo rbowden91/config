@@ -1,0 +1,18 @@
+{
+    packages: [
+        zsh
+        fonts-powerline
+    ]
+    install: [
+	export ZSH="$(XDG_CONFIG_HOME}/zsh sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+	rm ~/.zshrc*
+	#stow
+    ]
+	# TODO: pull from subrepos?
+	#git submodule update subrepos/{zsh-syntax-highlighting,zsh-autosuggestions,powerlevel9k}
+	# need to stow first
+	# also, add this to .bashrc
+	#add_to_file ~/.zshrc "$$(cat <<-'EOF'
+	#    source "$${HOME}/.generic_profile"
+	#EOF
+	#)"

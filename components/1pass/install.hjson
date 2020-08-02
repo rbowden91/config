@@ -1,0 +1,4 @@
+wget -O op.zip https://cache.agilebits.com/dist/1P/op/pkg/v1.0.0/op_linux_amd64_v1.0.0.zip
+unzip op
+rm op.zip
+

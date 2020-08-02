@@ -1,0 +1,15 @@
+{
+    packages: [
+        openssh-client
+    ]
+    subrepos: {
+        ssh-ident: {
+            local: [
+            ]
+            global: [
+            ]
+        }
+    }
+    files: {
+    }
+}

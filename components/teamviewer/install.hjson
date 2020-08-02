@@ -1,0 +1,4 @@
+if ! sudo apt list 2> /dev/null | grep -q 'teamviewer.*installed'; then
+    wget -O teamviewer.deb https://download.teamviewer.com/download/linux/teamviewer_amd64.deb
+    sudo apt install -y --show-progress ./teamviewer.deb
+fi

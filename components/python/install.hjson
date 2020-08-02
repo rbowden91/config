@@ -1,0 +1,14 @@
+// wget https://bootstrap.pypa.io/get-pip.py
+// sudo python2 get-pip.py
+{
+	'dependencies': [
+		#pyenv
+	]
+	'pip3': [
+		pipenv
+		mypy
+		pylint
+		flake8
+		#virtualenv
+	]
+}

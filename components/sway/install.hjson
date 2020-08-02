@@ -1,0 +1,37 @@
+meson *
+wlroots
+wayland
+wayland-protocols *
+pcre
+json-c
+pango
+cairo
+gdk-pixbuf2 (optional: system tray)
+scdoc (optional: man pages) *
+git (optional: version info) *
+
+
+
+meson build
+ninja -C build
+sudo ninja -C build install
+
+On systems without logind, you need to suid the sway binary:
+
+sudo chmod a+s /usr/local/bin/sway
+
+sudo apt install meson libgdk-pixbuf2.0-dev wayland-protocols libjson-c-dev libevdev-dev libinput-dev libpcre3-dev
+libpango1.0-dev libcairo2-dev libwayland-dev scdoc
+
+
+wlroots:
+sudo apt install libwayland-dev wayland-protocols xcb libxcb-composite0-dev libxcb-xfixes0-dev libxcb-xinput-dev libxcb-image0-dev libxcb-render0-dev
+libx11-xcb-dev libxcb-icccm4-dev libdrm-dev libudev-dev libpixman-1-dev libxkbcommon-dev libinput-dev libgbm-dev
+libgles2-mesa-dev libegl-dev meson libavutil-dev libavcodec-dev libavformat-dev libsystemd-dev
+
+meson build
+ninja -C build
+sudo ninja -C build install
+
+sudo ldconfig
+

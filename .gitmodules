@@ -1,54 +1,75 @@
 [submodule "subrepos/vte-ng"]
-	path = subrepos/vte-ng
+	path = components/termite/vte-ng
 	url = https://github.com/thestinger/vte-ng.git
 [submodule "subrepos/i3"]
-	path = subrepos/i3
+	path = components/i3/i3
 	url = https://www.github.com/Airblader/i3
 [submodule "subrepos/termite"]
-	path = subrepos/termite
+	path = components/termite/termite
 	url = https://github.com/thestinger/termite.git
 [submodule "subrepos/bar"]
-	path = subrepos/bar
+	path = components/i3/bar
 	url = https://github.com/krypt-n/bar.git
 [submodule "subrepos/fzf"]
-	path = subrepos/fzf
+	path = components/fzf/fzf
 	url = https://github.com/junegunn/fzf.git
 [submodule "subrepos/tpm"]
-	path = subrepos/tpm
+	path = components/tmux/tpm
 	url = https://github.com/tmux-plugins/tpm
 [submodule "subrepos/girara"]
-	path = subrepos/girara
+	path = components/zathura/girara
 	url = https://git.pwmt.org/pwmt/girara.git
 [submodule "subrepos/zathura"]
-	path = subrepos/zathura
+	path = components/zathura/zathura
 	url = https://git.pwmt.org/pwmt/zathura.git
 [submodule "subrepos/zathura-pdf-poppler"]
-	path = subrepos/zathura-pdf-poppler
+	path = components/zathura/zathura-pdf-poppler
 	url = https://git.pwmt.org/pwmt/zathura-pdf-poppler.git
 [submodule "subrepos/vimrc"]
-	path = subrepos/vimrc
+	path = components/vim/vimrc
 	url = https://github.com/rbowden91/vimrc.git
 [submodule "subrepos/vim"]
-	path = subrepos/vim
+	path = components/vim/vim
 	url = https://github.com/vim/vim
 [submodule "subrepos/i3lock-color"]
-	path = subrepos/i3lock-color
+	path = components/i3/i3lock-color
 	url = https://github.com/PandorasFox/i3lock-color
 [submodule "subrepos/nerd-fonts"]
-	path = subrepos/nerd-fonts
+	path = components/fonts/nerd-fonts
 	url = https://github.com/ryanoasis/nerd-fonts.git
 [submodule "subrepos/spotify-now"]
-	path = subrepos/spotify-now
+	path = components/spotify/spotify-now
 	url = https://github.com/micahco/spotify-now.git
 [submodule "subrepos/i3-volume"]
-	path = subrepos/i3-volume
+	path = components/i3/i3-volume
 	url = https://github.com/hastinbe/i3-volume.git
 [submodule "subrepos/zsh-syntax-highlighting"]
-	path = subrepos/zsh-syntax-highlighting
+	path = components/zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "subrepos/zsh-autosuggestions"]
-	path = subrepos/zsh-autosuggestions
+	path = components/zsh/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 [submodule "subrepos/powerlevel9k"]
-	path = subrepos/powerlevel9k
+	path = components/zsh/powerlevel9k
 	url = https://github.com/bhilburn/powerlevel9k.git
+[submodule "subrepos/i3expo"]
+	path = components/i3expo/i3expo
+	url = https://gitlab.com/d.reis/i3expo
+[submodule "subrepos/ssh-ident"]
+	path = components/ssh-ident/ssh-ident
+	url = https://github.com/ccontavalli/ssh-ident
+[submodule "components/vim/Vundle.vim"]
+	path = components/vim/Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git
+[submodule "components/fonts/awesome-terminal-fonts"]
+	path = components/fonts/awesome-terminal-fonts
+	url = https://github.com/gabrielelana/awesome-terminal-fonts
+[submodule "components/component/compton/compton"]
+	path = components/component/compton/compton
+	url = https://github.com/rbowden91/config
+[submodule "components/tmux/component/gtk-sni-tray/gtk-sni-tray"]
+	path = components/tmux/component/gtk-sni-tray/gtk-sni-tray
+	url = https://github.com/rbowden91/config
+[submodule "components/vim/component/sway/sway"]
+	path = components/vim/component/sway/sway
+	url = https://github.com/rbowden91/vimrc.git

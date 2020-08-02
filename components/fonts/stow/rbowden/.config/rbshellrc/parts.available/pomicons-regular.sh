@@ -1,0 +1,1 @@
+../../../../../awesome-terminal-fonts/fonts/pomicons-regular.sh

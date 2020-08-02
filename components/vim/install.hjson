@@ -1,0 +1,71 @@
+// Dependencies:
+// build-essential, cmake, python3-dev: YouCompleteMe (https://github.com/Valloric/YouCompleteMe)
+// nodejs, npm: YouCompleteMe JavaScript/TypeScript support
+// clang, clang-tidy: YouCompleteMe C family support
+// golang-go: YouCompleteMe Go support
+// mono-complete (alternatively, just mono-devel): YouCompleteMe C# support
+// openjdk-8-jre: YouCompleteMe Java support
+// ack: ack.vim (https://github.com/mileszs/ack.vim)
+// codequery: vim-codequery (https://github.com/devjoe/vim-codequery)
+
+
+// python3, pip3, python2.7, ruby, ruby-dev, python3-dev, python2.7-dev, nodejs, npm (npm -g for global)
+// clang, golang-go, mono-complete, openjdk-8-jre (mono is for C#)
+// pip3 install hjson
+// export GEM_HOME="$HOME/.gem"
+// export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/config
+{
+    dependencies: [
+	// fzf
+    ]
+    packages: [
+	// building vim?
+	build-essential
+	cmake
+
+	// vim options
+	libncurses5-dev
+	libgtk2.0-dev
+	libatk1.0-dev
+	libcairo2-dev
+	libx11-dev
+	libxpm-dev
+	libxt-dev
+
+	// vimrc
+	ack
+	codequery
+	clang-tidy
+	exuberant-ctags
+    ]
+    pip3: [ pycscope ]
+    gem: [ starscope ]
+    npm: [ typescript ]
+    install: [
+	git submodule init vim
+	cd vim
+	# TODO: change from /usr/local to .local/
+	CFLAGS='-O3' ./configure \
+		--prefix=/usr/local \
+		--enable-gui=auto \
+		--disable-nls \
+		--enable-multibyte \
+		--with-tlib=ncurses \
+		--enable-pythoninterp \
+		--enable-python3interp \
+		--enable-rubyinterp \
+		--enable-cscope \
+		--with-features=huge
+	make
+	make install
+	cd ..
+
+	git submodule init vimrc
+	cd vimrc
+	vim +PluginInstall +qall
+	cd bundle/YouCompleteMe
+	./install.py --cs-completer --go-completer --rust-completer --java-completer --clang-completer
+	cd ../../..
+
+    ]
+}

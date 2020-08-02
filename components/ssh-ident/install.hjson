@@ -1,0 +1,19 @@
+{
+    packages: [
+        openssh-client
+    ]
+    subrepos: {
+        ssh-ident: {
+            local: [
+                chmod 755 ssh-ident
+            ]
+            global: [
+                sudo dpkg-divert --divert /usr/bin/ssh.ssh-ident --rename /usr/bin/ssh
+                sudo mv ssh-ident /usr/bin/ssh
+                sudo chmod 755 /usr/bin/ssh
+            ]
+        }
+    }
+    files: {
+    }
+}

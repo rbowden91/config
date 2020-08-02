@@ -1,0 +1,1 @@
+../../parts.available/viminit.sh

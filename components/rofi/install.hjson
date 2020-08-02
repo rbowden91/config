@@ -1,0 +1,5 @@
+sudo add-apt-repository ppa:papirus/papirus
+sudo apt install papirus-icon-theme
+
+
+

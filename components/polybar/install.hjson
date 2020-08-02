@@ -1,0 +1,15 @@
+A compiler with C++14 support (clang-3.4+, gcc-5.1+), cmake 3.1+, git
+
+sudo apt install libcairo2-dev libxcb1-dev xcb-proto libxcb-util-dev libxcb-xkb-dev libalsaplayer-dev libpulse-dev libjsoncpp-dev libmpdclient-dev libcurl4-openssl-dev libnl-genl-3-dev wireless-tools
+libasound2-dev
+
+sudo apt-get install \
+  cmake cmake-data libcairo2-dev libxcb1-dev libxcb-ewmh-dev \
+  libxcb-icccm4-dev libxcb-image0-dev libxcb-randr0-dev \
+  libxcb-util0-dev libxcb-xkb-dev pkg-config python3-xcbgen \
+  xcb-proto libxcb-xrm-dev i3-wm libasound2-dev libmpdclient-dev \
+  libiw-dev libcurl4-openssl-dev libpulse-dev \
+  libxcb-composite0-dev xcb libxcb-ewmh2
+
+# i3 src files were in
+CPATH=~/.local/include:$CPATH

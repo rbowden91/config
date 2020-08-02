@@ -1,0 +1,5 @@
+# wget -O "${TMPDIR}"/chrome.deb https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+#sudo apt install -y --show-progress "${TMPDIR}"/chrome.deb
+sudo apt install -y --show-progress <(curl https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb)
+# TODO: is this permanent?
+xdg-settings set default-web-browser google-chrome.desktop

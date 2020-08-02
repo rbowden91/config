@@ -1,0 +1,1 @@
+../../parts.available/00_xdg.sh

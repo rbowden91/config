@@ -1,0 +1,6 @@
+{
+    install:
+        cd fzf && make && make install
+        stow
+        #$XDG_CONFIG_HOME/fzf/install --xdg --no-update-rc
+}

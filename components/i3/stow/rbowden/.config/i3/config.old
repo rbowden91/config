@@ -1,0 +1,306 @@
+
+# TODO: https://faq.i3wm.org/question/239/how-do-i-suspendlockscreen-and-logout.1.html
+# TODO: http://flux242.blogspot.com/2015/10/using-i3-tiling-window-manager-with.html
+# Windows/Super key
+set $mod Mod4
+
+#set $transparent #00000000
+#bar {
+#    i3bar_command i3bar -t
+#    colors {
+#        background $transparent
+#    }
+#    workspace_buttons no
+#    binding_mode_indicator no
+#    font pango:Hack Nerd Font 12
+#    #tray_output none
+#    position bottom
+#    tray_padding 0
+#}
+
+# Font for window titles.
+font pango:Hack Nerd Font 12
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
+
+# reload the configuration file
+bindsym $mod+Shift+c exec --no-startup-id ~/.config/i3/gen_config.sh && i3-msg reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r exec --no-startup-id ~/.config/i3/gen_config.sh && i3-msg restart
+
+# lock screen
+bindsym $mod+Control+l exec --no-startup-id ~/.local/bin/mylock
+
+# start a terminal
+bindsym $mod+Return exec i3-sensible-terminal
+
+# Start i3-dmenu-desktop which only displays applications
+# shipping a .desktop file. It is a wrapper around dmenu, so you need that
+# installed.
+#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -p ''"
+#bindsym $mod+Shift+d exec --no-startup-id bash -c 'locate -d/home/rbowden/.config/rofi/rofi_db -e -i --regex "/home/$USER/[^\.]+" | rofi -dmenu -i | xargs -r -0 xdg-open'
+bindsym $mod+Shift+d exec --no-startup-id bash -c 'rofi -modi "Global Search":"~/.config/rofi/rofi-spotlight/rofi-spotlight.sh" -show "Global Search" -config /home/rbowden/.config/rofi/rofi-spotlight/rofi.rasi'
+
+
+# try to make sure popups actually float, instead of tile
+# https://wiki.archlinux.org/index.php/I3#Correct_handling_of_floating_dialogs
+for_window [window_role="pop-up"] floating enable
+for_window [window_role="task_dialog"] floating enable
+for_window [title="Preferences$"] floating enable
+for_window [class="(?i)mplayer"] floating enable
+
+
+
+# AUTOSTART
+
+# https://github.com/ganifladi/blurme
+#exec --no-startup-id ~/.local/bin/blurme &
+#exec vmware-user-suid-wrapper --no-startup-id
+exec --no-startup-id feh --no-fehbg --bg-scale ~/.wallpapers/5120x1440/dark_valley.jpg
+exec --no-startup-id compton -b
+exec --no-startup-id ~/.config/i3/i3_lemonbar.py
+# https://github.com/rjekker/i3-battery-popup
+exec --no-startup-id ~/.config/i3/i3-battery-popup/i3-battery-popup -n
+exec --no-startup-id ~/.local/bin/dropbox start
+# can use acpi_listen, showkey, `xmodmap -pke`, evtest, or xev to figure out key codes
+# F1
+#bindsym XF86AudioRaiseVolume exec
+# F2
+#bindsym XF86AudioLowerVolume exec
+# F3
+#bindsym XF86AudioMute        exec
+# F4
+bindsym XF86AudioMicMute exec --no-startup-id amixer set Capture toggle
+# F5
+#bindsym XF86MonBrightnessDown exec 
+# F6
+#bindsym XF86MonBrightnessUp exec 
+# F7
+#bindsym XF86Display exec 
+# F8
+#bindsym XF86WLAN exec 
+# F9
+#bindsym XF86Tools exec 
+# F10
+#bindsym XF86Bluetooth exec 
+# F11
+# showkey: 374
+# acpi_listen: ibm/hotkey LEN0268:00 00000080 00001315
+# F12
+#bindsym XF86Favorites exec 
+
+
+# Fn key
+#bindsym XF86Wakeup exec
+# PgUp
+#bindsym Prior exec
+# PgDown
+#bindsym Next exec
+# PrtSc
+#bindsym Print exec
+# Shift_L, Shift_R, Esc, Tab, Return, Backspace, Home, End, Insert, Delete, Control_L, Super_L, Alt_L, Left, Right,
+# Caps_Lock (Lock?)
+# Down, Up, 
+# Left click: Button 1
+# Middle click: Button 2
+# Right click: Button 3
+## i3gaps
+
+gaps inner 10
+gaps outer 10
+for_window [class="^.*"] border pixel 2
+smart_gaps on
+smart_borders no_gaps
+hide_edge_borders smart_no_gaps
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+r mode "resize"
+# Volume control
+
+# Path to volume control, without trailing slash
+set $volumepath ~/.config/i3/i3-volume
+
+# Amount to increase/decrease volume as a percentage (used with -i, -d)
+set $volumestep 5
+
+# Symbolic name for sink (numeric index not supported) (used with -s $sinkname)
+#   List sink names: pacmd list-sinks | awk -F "[<>]" '/^\s+name: <.*>/{print $2}'
+#set $sinkname alsa_output.pci-0000_00_1b.0.analog-stereo
+
+# Using pulseaudio-utils (append "-s $sinkname" without quotes to override default sink)
+bindsym XF86AudioRaiseVolume exec $volumepath/volume -np -i $volumestep -t $statuscmd -u $statussig
+bindsym XF86AudioLowerVolume exec $volumepath/volume -np -d $volumestep -t $statuscmd -u $statussig
+bindsym XF86AudioMute        exec $volumepath/volume -mn -t $statuscmd -u $statussig
+# TODO: workspace name daemon: https://pypi.org/project/i3-workspace-names-daemon/ ?
+#
+# horizontal split
+bindsym $mod+Alt+percent split h
+# vertical split
+bindsym $mod+Alt+quotedbl split v
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# Scratchpad
+bindsym $mod+Shift+BackSpace move scratchpad
+bindsym $mod+BackSpace scratchpad show
+#bindsym $mod+BackSpace [class="Termite"] scratchpad show
+#bindsym $mod+equal [class="keepassx"] scratchpad show
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+#floating_minimum_size 300 x 300
+floating_maximum_size 300 x 300
+
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# focus the parent container
+bindsym $mod+p focus parent
+# focus the child container
+bindsym $mod+c focus child
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+Left focus left
+bindsym $mod+j focus down
+bindsym $mod+Down focus down
+bindsym $mod+k focus up
+bindsym $mod+Up focus up
+bindsym $mod+l focus right
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+l move right
+bindsym $mod+Shift+Right move right
+
+# switch to workspace
+# https://www.nerdfonts.com/cheat-sheet
+#                 
+#         直睊     
+#      
+#                  勇              瑩羚 刺
+#           ﭮ   聆   暑梅海  
+# 摒敖晴朗ﭼ 望杖歹殺流ﭽ 滛滋漢瀞煮瞧    
+#   﫮  塚       﫦      辶逸     墳奄奔ﱜ ﱝ 婢ﱛ
+#     ﳌ             菱列咽劣
+bindsym $mod+1 workspace number 1 
+bindsym $mod+2 workspace number 2 
+bindsym $mod+3 workspace number 3 
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9 刺
+bindsym $mod+0 workspace number 10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+#                 
+#         直睊     
+#      
+#                  勇              瑩羚 刺
+#           ﭮ   聆   暑梅海  
+# 摒敖晴朗ﭼ 望杖歹殺流ﭽ 滛滋漢瀞煮瞧    
+#   﫮  塚       﫦      辶逸     墳奄奔ﱜ ﱝ 婢ﱛ
+#     ﳌ             菱列咽劣
+
+#for_window [instance=notepad] sticky enable
+floating_minimum_size 1230x664
+floating_maximum_size 1862x2024
+bindsym $mod+t exec --no-startup-id compton-trans 0 -s
+focus_on_window_activation focus
+exec --no-startup-id deadd-notification-center
+#kill -s USR1 $(pidof deadd-notification-center)
+
+# Terminal
+exec --no-startup-id i3-msg 'workspace number 1'
+exec --no-startup-id termite --title "termite"
+exec --no-startup-id termite --title "termite"
+exec --no-startup-id i3-msg 'rename workspace 1 to "1:"'
+
+# Chrome
+exec --no-startup-id i3-msg 'workspace number 2; append_layout ~/.config/i3/workspaces/chrome.json'
+exec --no-startup-id google-chrome
+exec --no-startup-id i3-msg 'rename workspace 2 to "2:"'
+
+
+# Slack and Discord
+exec --no-startup-id i3-msg 'workspace number 3; append_layout ~/.config/i3/workspaces/slack_discord.json'
+exec --no-startup-id slack
+exec --no-startup-id discord
+for_window [class="^discord$"] move to workspace number 3
+exec --no-startup-id i3-msg 'rename workspace 3 to "3:"'
+
+# Spotify
+exec --no-startup-id spotify
+for_window [class="^(?i)spotify$"] move to workspace number 4
+exec --no-startup-id i3-msg 'rename workspace 4 to "4:"'
+
+# Zoom
+for_window [class="^zoom$"] move to workspace number 7
+exec --no-startup-id i3-msg 'rename workspace 7 to "7:辶"'
+
+# Teamviewer
+exec --no-startup-id i3-msg 'workspace number 9; append_layout ~/.config/i3/workspaces/teamviewer.json'
+exec --no-startup-id teamviewer
+exec --no-startup-id i3-msg 'rename workspace 9 to "9:刺"'
+
+# Tmux Terminal
+#exec --no-startup-id termite --title "termite server" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t server'\'')"'
+
+# Vim+Tmux Terminal
+#exec --no-startup-id termite --title "termite vim" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t paper'\'')"'
+
+# Start in workspace 1
+exec --no-startup-id i3-msg 'workspace number 1'
+
+exec --no-startup-id stalonetray -c ~/.config/stalonetrayrc

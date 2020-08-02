@@ -1,0 +1,11 @@
+# to boot to text
+sudo vim /etc/default/grub
+# GRUB_CMDLINE_LINUX_DEFAULT="text"
+sudo update-grub
+sudo systemctl disable lightdm
+
+
+systemctl set-default multi-user.target
+
+sudo apt remove gdm3
+

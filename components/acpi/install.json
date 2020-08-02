@@ -1,0 +1,10 @@
+{
+    "notes": "Currently changes the brightness of all backlights in /sys/class/backlight/ by 10% each button click. You can change this if need be. acpi_listen",
+    "packages": ["acpi", "bc"],
+    "dependencies": [],
+    "subrepos": [],
+    "files": {
+        "*": "/etc/acpi/"
+    },
+    "post": "systemctl restart acpid"
+}

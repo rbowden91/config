@@ -1,0 +1,1 @@
+../../../../../awesome-terminal-fonts/fonts/fontawesome-regular.sh

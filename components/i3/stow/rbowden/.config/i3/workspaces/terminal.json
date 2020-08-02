@@ -1,0 +1,26 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "percent": 0.333333333333333,
+    "swallows": [
+        {
+            "title": "termite server"
+        }
+    ],
+    "type": "con"
+}
+
+{
+    "border": "pixel",
+    "current_border_width": 2,
+    "floating": "auto_off",
+    "percent": 0.333333333333333,
+    "swallows": [
+        {
+            "title": "termite vim"
+        }
+    ],
+    "type": "con"
+}

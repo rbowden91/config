@@ -1,0 +1,1 @@
+../../../../../vimrc/colors/smyck.vim

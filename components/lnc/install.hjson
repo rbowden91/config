@@ -1,0 +1,15 @@
+# For stack:
+curl -sSL https://get.haskellstack.org/ | sh
+
+# libgtk3.0-cil-dev?
+sudo apt install gobject-introspection libxml2-dev
+
+tar -xvzf linux_notification_center-1.7.2.tar.gz
+cd linux_notification_center-1.7.2
+stack install
+mkdir -p ~/.config/deadd; touch ~/.config/deadd/deadd.conf
+
+#wget https://github.com/phuhl/linux_notification_center/releases/download/1.7.2/deadd-notification-center
+#mkdir -p .out
+#mv deadd-notification-center .out
+#sudo make install
