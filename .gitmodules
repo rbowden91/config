@@ -43,6 +43,10 @@
 [submodule "subrepos/i3-volume"]
 	path = components/i3/i3-volume
 	url = https://github.com/hastinbe/i3-volume.git
+[submodule "components/i3/i3-battery-popup"]
+	path = components/i3/i3-battery-popup
+	url = https://github.com/rjekker/i3-battery-popup.git
+
 [submodule "subrepos/zsh-syntax-highlighting"]
 	path = components/zsh/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
@@ -64,12 +68,9 @@
 [submodule "components/fonts/awesome-terminal-fonts"]
 	path = components/fonts/awesome-terminal-fonts
 	url = https://github.com/gabrielelana/awesome-terminal-fonts
-[submodule "components/component/compton/compton"]
-	path = components/component/compton/compton
-	url = https://github.com/rbowden91/config
-[submodule "components/tmux/component/gtk-sni-tray/gtk-sni-tray"]
+[submodule "components/gtk-sni-tray/gtk-sni-tray"]
 	path = components/tmux/component/gtk-sni-tray/gtk-sni-tray
 	url = https://github.com/rbowden91/config
-[submodule "components/vim/component/sway/sway"]
+[submodule "components/sway/sway"]
 	path = components/vim/component/sway/sway
 	url = https://github.com/rbowden91/vimrc.git
