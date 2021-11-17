@@ -44,11 +44,12 @@ class Battery():
         self.manager = manager
 
         self.battery_path = bp = Path('/sys/class/power_supply/BAT0/')
+        # Can also find all this in /uevent
         self.charging_path = bp / 'status'
         self.capacity_path = bp / 'capacity'
         self.power_now_path = bp / 'power_now'
         self.energy_now_path = bp / 'energy_now'
-        self.voltage_now_path = bp / 'energy_now'
+        self.voltage_now_path = bp / 'voltage_now'
         self.energy_full_path = bp / 'energy_full'
         self.display_info = False
 
@@ -112,8 +113,9 @@ class Battery():
             return
 
         if divisor != 0:
-            self.min_remain = (energy * 60) % divisor
             self.hr_remain = energy // divisor
+            energy %= divisor
+            self.min_remain = (energy * 60) // divisor
 
     def toggle_display_info(self):
         self.display_info = not self.display_info

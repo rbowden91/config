@@ -1,26 +1,74 @@
 // vim:ts=4:sw=4:et
 {
-    "border": "pixel",
-    "current_border_width": 2,
+    // splith split container with 2 children
+    "border": "normal",
     "floating": "auto_off",
-    "percent": 0.333333333333333,
-    "swallows": [
+    "layout": "splith",
+    "percent": 1,
+    "type": "con",
+    "nodes": [
         {
-            "title": "termite server"
+            "border": "pixel",
+            "current_border_width": 4,
+            "floating": "auto_off",
+            "name": "termite",
+            "percent": 0.5,
+            "swallows": [
+               {
+                 "title": "^termite1$"
+               }
+            ],
+            "type": "con"
+        },
+        {
+            "border": "pixel",
+            "current_border_width": 4,
+            "floating": "auto_off",
+            "name": "termite",
+            "percent": 0.5,
+            "swallows": [
+               {
+                 "title": "^termite2$"
+               }
+            ],
+            "type": "con"
         }
-    ],
-    "type": "con"
+    ]
 }
 
 {
-    "border": "pixel",
-    "current_border_width": 2,
+    // floating_con with 1 children
+    "border": "normal",
     "floating": "auto_off",
-    "percent": 0.333333333333333,
-    "swallows": [
+    "layout": "splith",
+    "percent": null,
+    "rect": {
+       "height": 1620,
+       "width": 1870,
+       "x": 985,
+       "y": 270
+    },
+    "type": "floating_con",
+    "nodes": [
         {
-            "title": "termite vim"
+            "border": "pixel",
+            "current_border_width": 4,
+            "floating": "user_on",
+            "geometry": {
+               "height": 914,
+               "width": 1534,
+               "x": 0,
+               "y": 0
+            },
+            "name": "termite",
+            "percent": 1,
+            "swallows": [
+               {
+                 "title": "^termite floating$"
+               }
+            ],
+            "type": "con"
         }
-    ],
-    "type": "con"
+    ]
 }
+

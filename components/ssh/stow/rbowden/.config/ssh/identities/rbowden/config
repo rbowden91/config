@@ -1,3 +1,13 @@
+#Match exec "on_rbowden"
+#    CanonicalizeHostname yes
+#    CanonicalDomains local.rbowden.com
+#    CanonicalizeMaxDots 0
+#    CanonicalizeFallbackLocal yes
+#    HostName 192.168.88.151
+#    Port 22
+#Match !exec "on_rbowden"
+#    Proxyjump iroh
+
 # 142.93.57.44
 Host vps plex
     ServerAliveInterval 60
@@ -6,69 +16,63 @@ Host vps plex
     User root
     Port 23
 
-Match host iroh exec "on_rbowden"
-    Hostname 192.168.88.245
-    Port 22
-Match host iroh !exec "on_rbowden"
-    Proxyjump vps
-    Hostname 140.247.71.71
-    Port 2022
+#Match host iroh exec "on_rbowden"
+#    Hostname 192.168.88.245
+#    Port 22
+#Match host iroh !exec "on_rbowden"
+#    Proxyjump vps
+#    Hostname 140.247.71.71
+#    Port 2022
 #Match host iroh exec "on_harvard_secure"
 #Match host iroh exec "on_harvard_university"
 #Host iroh
 
-Host korra2
-    HostName 192.168.88.237
-Match host korra2 !exec "on_rbowden"
-    Proxyjump iroh
+Host azula azulaa
+    HostName 192.168.88.151
+    Port 22
+Host iroh iroha
+    HostName 192.168.88.156
+    Port 22
+Host azulaa iroha
+    User admin
 
 Host korra
-    HostName 192.168.88.253
-Match host korra !exec "on_rbowden"
-    Proxyjump iroh
+    HostName 192.168.88.187
 
 Host tenzin
     User admin
     HostName 192.168.88.1
     Port 2129
 
-# aang: PC in Thayer
-Host aang aang_local
-    User rbowden
-    Port 2223
-Host aang_local
-    Hostname aang.rbowden.com
-Host aang
-    Hostname vps.rbowden.com
-Host aang_pc*
-    User Rob
-    Hostname localhost
-    Port 22
-Host aang_pc_local
-    ProxyJump aang_local
-Host aang_pc
-    ProxyJump aang
-
 Host appa
-    Hostname appa.harvard.rbowden.com
-    User rbowden
-    Port 22
-    ProxyJump plex
-
-Host eva
     Hostname vps.rbowden.com
-    User rbowden
-    Port 2230
+    Port 22220
+
+Host eva qls
+    Hostname eva.qls.app
+    Port 22022
+Host qls
+    User qls
 
 Host zuko
     Hostname vps.rbowden.com
-    User rbowden
     Port 2228
+
+Host wp
+    Hostname qlsadvisors.ssh.wpengine.net
+    User qlsadvisors
+
+Host ethan
+    Hostname vps.rbowden.com
+    Port 42120
 
 Host *
     IgnoreUnknown UseKeychain
     UseKeychain yes
     ControlMaster auto
-    ControlPath   /home/rbowden/.config/ssh/tmp/%h_%p_%r
+    #ControlPath   $TMPDIR/ssh/control/%h_%p_%r
+    ControlPath   /home/rbowden/.local/tmp/ssh/control/%h_%p_%r
     ControlPersist 72000
     User rbowden
+    #RemoteForward 52698 localhost:52698
+

@@ -1,1 +1,4 @@
-FILE_USER_CONFIG="${HOME}/.config/ssh/ssh-ident" ssh-ident "$@"
+#!/usr/bin/env bash
+
+ssh-ident "$@"
+#{ ssh-ident -O check "$@" 2> /dev/null ; } && { timeout 3 ssh-ident "$@" exit || ssh-ident "$@" -O exit ; } ; ssh-ident "$@"

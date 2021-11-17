@@ -39,3 +39,5 @@
 #source $ZSH/oh-my-zsh.sh
 #source ${XDG_CONFIG_HOME}/rbshellrc/rbshell.sh nonlogin
 source $HOME/.config/rbshellrc/rbshell.sh nonlogin
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

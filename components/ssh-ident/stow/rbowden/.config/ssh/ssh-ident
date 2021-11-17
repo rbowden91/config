@@ -1,9 +1,0 @@
-DEFAULT_IDENTITY="rbowden"
-BINARY_SSH="/usr/bin/ssh"
-FILE_USER_CONFIG="${HOME}/.config/ssh/ssh-ident"
-DIR_IDENTITIES="${HOME}/.config/ssh/identities"
-DIR_AGENTS="${HOME}/.config/ssh/agents"
-#SSH_DEFAULT_OPTIONS="-oUseRoaming=no -A -oUserKnownHostsFile=${HOME}/.config/ssh/known_hosts"
-SSH_DEFAULT_OPTIONS="-oUseRoaming=no -oUserKnownHostsFile=${HOME}/.config/ssh/known_hosts"
-SSH_ADD_DEFAULT_OPTIONS='-t 72000'
-VERBOSITY=LOG_WARN

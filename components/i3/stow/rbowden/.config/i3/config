@@ -38,7 +38,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 # Start i3-dmenu-desktop which only displays applications
 # shipping a .desktop file. It is a wrapper around dmenu, so you need that
 # installed.
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="dmenu -i -p ''"
+bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu="rofi -dmenu -i -p '' -config /home/rbowden/.config/rofi/rofi-spotlight/rofi.rasi"
 #bindsym $mod+Shift+d exec --no-startup-id bash -c 'locate -d/home/rbowden/.config/rofi/rofi_db -e -i --regex "/home/$USER/[^\.]+" | rofi -dmenu -i | xargs -r -0 xdg-open'
 bindsym $mod+Shift+d exec --no-startup-id bash -c 'rofi -modi "Global Search":"~/.config/rofi/rofi-spotlight/rofi-spotlight.sh" -show "Global Search" -config /home/rbowden/.config/rofi/rofi-spotlight/rofi.rasi'
 
@@ -152,12 +152,21 @@ set $volumestep 5
 bindsym XF86AudioRaiseVolume exec $volumepath/volume -np -i $volumestep -t $statuscmd -u $statussig
 bindsym XF86AudioLowerVolume exec $volumepath/volume -np -d $volumestep -t $statuscmd -u $statussig
 bindsym XF86AudioMute        exec $volumepath/volume -mn -t $statuscmd -u $statussig
+for_window [window_role="About"] floating enable
 # TODO: workspace name daemon: https://pypi.org/project/i3-workspace-names-daemon/ ?
-#
+
+# https://erikdubois.be/two-different-ways-make-screenshot-i3/
+bindsym Print exec scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures/'
+bindsym Control+Print exec gnome-screenshot -i
+
 # horizontal split
-bindsym $mod+Alt+percent split h
+# bindsym $mod+m split h, layout stacking
+# bindsym $mod+n split h, layout tabbed
+bindsym $mod+m split h
+bindsym $mod+n split v
+# bindsym $mod+Alt+percent split h
 # vertical split
-bindsym $mod+Alt+quotedbl split v
+# bindsym $mod+Alt+quotedbl split v
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -244,6 +253,10 @@ bindsym $mod+Shift+7 move container to workspace number 7
 bindsym $mod+Shift+8 move container to workspace number 8
 bindsym $mod+Shift+9 move container to workspace number 9
 bindsym $mod+Shift+0 move container to workspace number 10
+
+# Moving workspaces between screens
+# bindsym $mod+p move workspace to output right
+
 #                 
 #         直睊     
 #      
@@ -259,40 +272,54 @@ floating_maximum_size 1862x2024
 bindsym $mod+t exec --no-startup-id compton-trans 0 -s
 focus_on_window_activation focus
 exec --no-startup-id deadd-notification-center
-#kill -s USR1 $(pidof deadd-notification-center)
+exec --no-startup-id stalonetray -c ~/.config/stalonetrayrc
+bindsym $mod+F1 exec --no-startup-id kill -s USR1 $(pidof deadd-notification-center)
 
 # Terminal
-exec --no-startup-id i3-msg 'workspace number 1'
-exec --no-startup-id termite --title "termite"
-exec --no-startup-id termite --title "termite"
-exec --no-startup-id i3-msg 'rename workspace 1 to "1:"'
+exec --no-startup-id i3-msg 'workspace number 1; append_layout ~/.config/i3/workspaces/terminal.json; rename workspace 1 to "1:"'
+exec --no-startup-id termite --title "termite1"
+exec --no-startup-id termite --title "termite2"
+exec --no-startup-id termite --title "termite floating"
 
 # Chrome
-exec --no-startup-id i3-msg 'workspace number 2; append_layout ~/.config/i3/workspaces/chrome.json'
-exec --no-startup-id google-chrome
-exec --no-startup-id i3-msg 'rename workspace 2 to "2:"'
-
+exec --no-startup-id i3-msg 'workspace number 2; append_layout ~/.config/i3/workspaces/chrome.json; rename workspace 2 to "2:"'
 
 # Slack and Discord
-exec --no-startup-id i3-msg 'workspace number 3; append_layout ~/.config/i3/workspaces/slack_discord.json'
+exec --no-startup-id i3-msg 'workspace number 3; append_layout ~/.config/i3/workspaces/slack_discord.json; rename workspace 3 to "3:"'
+#for_window [class="^discord$"] move to workspace number 3
+# hangouts
+for_window [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] move to workspace number 3
+for_window [class="Google-chrome" instance="crx_nckgahadagoaajjgafhacjanaoiihapd"] floating disable
 exec --no-startup-id slack
-exec --no-startup-id discord
-for_window [class="^discord$"] move to workspace number 3
-exec --no-startup-id i3-msg 'rename workspace 3 to "3:"'
+#exec --no-startup-id discord
+
+# Notes
+exec --no-startup-id i3-msg 'workspace number 4; append_layout ~/.config/i3/workspaces/clickup.json; rename workspace 4 to "4:"'
+# TODO: only if not already open?
+for_window [class="Google-chrome" instance="app.clickup.com"] move to workspace number 4
+for_window [class="Google-chrome" instance="app.clickup.com"] floating disable
+# tabs outliner
+for_window [class="Google-chrome" instance="crx_eggkanocgddhmamlbiijnphhppkpkmkl"] move to workspace number 4
+for_window [class="Google-chrome" instance="crx_eggkanocgddhmamlbiijnphhppkpkmkl"] floating disable
+exec --no-startup-id google-chrome --new-window --app=https://app.clickup.com/
+exec --no-startup-id termite --title "Termite Notes" --exec="vim --servername=notes notes.txt"
 
 # Spotify
-exec --no-startup-id spotify
-for_window [class="^(?i)spotify$"] move to workspace number 4
-exec --no-startup-id i3-msg 'rename workspace 4 to "4:"'
+#exec --no-startup-id i3-msg 'workspace number 5; append_layout ~/.config/i3/workspaces/spotify.json; rename workspace 5 to "5:"'
+#exec --no-startup-id i3-msg 'workspace number 5; rename workspace 5 to "5:"'
+#for_window [class="^(?i)spotify$"] move to workspace number 5
+#exec --no-startup-id spotify
 
 # Zoom
-for_window [class="^zoom$"] move to workspace number 7
-exec --no-startup-id i3-msg 'rename workspace 7 to "7:辶"'
+#exec --no-startup-id i3-msg 'rename workspace 7 to "7:辶"'
+#for_window [class="^zoom$"] move to workspace number 7
+#for_window [class="^obs$"] move to workspace number 7
+#exec --no-startup-id zoom
+#exec --no-startup-id obs
 
 # Teamviewer
-exec --no-startup-id i3-msg 'workspace number 9; append_layout ~/.config/i3/workspaces/teamviewer.json'
-exec --no-startup-id teamviewer
-exec --no-startup-id i3-msg 'rename workspace 9 to "9:刺"'
+#exec --no-startup-id i3-msg 'workspace number 9; append_layout ~/.config/i3/workspaces/teamviewer.json; rename workspace 9 to "9:刺"'
+#exec --no-startup-id teamviewer
 
 # Tmux Terminal
 #exec --no-startup-id termite --title "termite server" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t server'\'')"'
@@ -300,7 +327,7 @@ exec --no-startup-id i3-msg 'rename workspace 9 to "9:刺"'
 # Vim+Tmux Terminal
 #exec --no-startup-id termite --title "termite vim" --exec='bash -c "bash --rcfile <(echo '\''source ~/.bashrc; tmux attach-session -t paper'\'')"'
 
+exec --no-startup-id google-chrome
+
 # Start in workspace 1
 exec --no-startup-id i3-msg 'workspace number 1'
-
-exec --no-startup-id stalonetray -c ~/.config/stalonetrayrc
